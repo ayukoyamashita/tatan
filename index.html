@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>家族色のタータンチェック</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+	<div class="input">
+		<ol class="input_list">
+			<li>
+				<div class="input_date">
+					<select v-model="date1_month">
+						<option value="0">月</option>
+						<option v-for="n in 12" :value="n">{{n}}</option>
+					</select>
+					<select v-model="date1_day">
+						<option value="0">日</option>
+						<option v-for="day in date1_last_day" :value="day">{{day}}</option>
+					</select>
+				</div>
+				<span class="checkIcon is-bg"></span>
+				<date-info :date-info="date1_info"></date-info>
+			</li>
+			<li>
+				<select v-model="date2_month">
+					<option value="0">月</option>
+					<option v-for="n in 12" :value="n">{{n}}</option>
+				</select>
+				<select v-model="date2_day">
+					<option value="0">日</option>
+					<option v-for="day in date2_last_day" :value="day">{{day}}</option>
+				</select>
+				<img src="images/check1.png" class="checkIcon">
+				<date-info :date-info="date2_info"></date-info>
+			</li>
+			<li>
+				<select v-model="date3_month">
+					<option value="0">月</option>
+					<option v-for="n in 12" :value="n">{{n}}</option>
+				</select>
+				<select v-model="date3_day">
+					<option value="0">日</option>
+					<option v-for="day in date3_last_day" :value="day">{{day}}</option>
+				</select>
+				<img src="images/check2.png" class="checkIcon">
+				<date-info :date-info="date3_info"></date-info>
+			</li>
+			<li>
+				<select v-model="date4_month">
+					<option value="0">月</option>
+					<option v-for="n in 12" :value="n">{{n}}</option>
+				</select>
+				<select v-model="date4_day">
+					<option value="0">日</option>
+					<option v-for="day in date4_last_day" :value="day">{{day}}</option>
+				</select>
+				<img src="images/check3.png" class="checkIcon">
+				<date-info :date-info="date4_info"></date-info>
+			</li>
+			<li>
+				<select v-model="date5_month">
+					<option value="0">月</option>
+					<option v-for="n in 12" :value="n">{{n}}</option>
+				</select>
+				<select v-model="date5_day">
+					<option value="0">日</option>
+					<option v-for="day in date5_last_day" :value="day">{{day}}</option>
+				</select>
+				<img src="images/check4.png" class="checkIcon">
+				<date-info :date-info="date5_info"></date-info>
+			</li>
+		</ol>
+	</div>
+	<div class="preview" :style="{backgroundColor: preview_color.c0}">
+		<div class="preview_layer preview_layer_1" :style="{backgroundColor: preview_color.c1}"></div>
+		<div class="preview_layer preview_layer_2" :style="{backgroundColor: preview_color.c2}"></div>
+		<div class="preview_layer preview_layer_3" :style="{backgroundColor: preview_color.c3}"></div>
+		<div class="preview_layer preview_layer_4" :style="{backgroundColor: preview_color.c4}"></div>
+	</div>
+</div>
+<script type="text/x-template" id="date-info">
+	<div v-if="dateInfo != null" class="input_info">
+		<div class="input_color" :style="{backgroundColor: dateInfo[1]}"></div>
+		{{[dateInfo[0], dateInfo[2], dateInfo[3]].filter(Boolean).join(' | ')}}
+	</div>
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="js/birthday_color.js"></script>
+<script>
+	var date_info = {
+		template: '#date-info',
+		props: ['dateInfo'],
+		methods: {
+		},
+	};
+
+	new Vue({
+		el: '#app',
+		components: {
+			'date-info': date_info
+		},
+		data: {
+			last_date: [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+			date1_month: 0,
+			date1_day: 0,
+			date1_last_day: null,
+			date1_info: [],
+			date2_month: 0,
+			date2_day: 0,
+			date2_last_day: null,
+			date2_info: [],
+			date3_month: 0,
+			date3_day: 0,
+			date3_last_day: null,
+			date3_info: [],
+			date4_month: 0,
+			date4_day: 0,
+			date4_last_day: null,
+			date4_info: [],
+			date5_month: 0,
+			date5_day: 0,
+			date5_last_day: null,
+			date5_info: [],
+			preview_color: {
+				c0: 'transparent',
+				c1: 'transparent',
+				c2: 'transparent',
+				c3: 'transparent',
+				c4: 'transparent',
+			},
+		},
+		computed: {
+			date1() {
+				return this.zeroPadding(this.date1_month) + this.zeroPadding(this.date1_day);
+			},
+			date2() {
+				return this.zeroPadding(this.date2_month) + this.zeroPadding(this.date2_day);
+			},
+			date3() {
+				return this.zeroPadding(this.date3_month) + this.zeroPadding(this.date3_day);
+			},
+			date4() {
+				return this.zeroPadding(this.date4_month) + this.zeroPadding(this.date4_day);
+			},
+			date5() {
+				return this.zeroPadding(this.date5_month) + this.zeroPadding(this.date5_day);
+			},
+		},
+		watch: {
+			date1_month() {
+				this.date1_last_day = this.last_date[this.date1_month - 1];
+				this.date1_day = 0;
+			},
+			date2_month() {
+				this.date2_last_day = this.last_date[this.date2_month - 1];
+				this.date2_day = 0;
+			},
+			date3_month() {
+				this.date3_last_day = this.last_date[this.date3_month - 1];
+				this.date3_day = 0;
+			},
+			date4_month() {
+				this.date4_last_day = this.last_date[this.date4_month - 1];
+				this.date4_day = 0;
+			},
+			date5_month() {
+				this.date5_last_day = this.last_date[this.date5_month - 1];
+				this.date5_day = 0;
+			},
+			date1() {
+				this.date1_info = birthday_color[this.date1];
+				if (this.date1_info) {
+					this.preview_color.c0 = this.date1_info[1];
+				} else {
+					this.preview_color.c0 = 'transparent';
+				}
+			},
+			date2() {
+				this.date2_info = birthday_color[this.date2];
+				if (this.date2_info) {
+					this.preview_color.c1 = this.date2_info[1];
+				} else {
+					this.preview_color.c1 = 'transparent';
+				}
+			},
+			date3() {
+				this.date3_info = birthday_color[this.date3];
+				if (this.date3_info) {
+					this.preview_color.c2 = this.date3_info[1];
+				} else {
+					this.preview_color.c2 = 'transparent';
+				}
+			},
+			date4() {
+				this.date4_info = birthday_color[this.date4];
+				if (this.date4_info) {
+					this.preview_color.c3 = this.date4_info[1];
+				} else {
+					this.preview_color.c3 = 'transparent';
+				}
+			},
+			date5() {
+				this.date5_info = birthday_color[this.date5];
+				if (this.date5_info) {
+					this.preview_color.c4 = this.date5_info[1];
+				} else {
+					this.preview_color.c4 = 'transparent';
+				}
+			},
+		},
+		methods: {
+			zeroPadding(num) {
+				return ('00' + num).slice(-2);
+			}
+		}
+	})
+</script>
+</body>
+</html>
