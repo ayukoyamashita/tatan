@@ -3,6 +3,7 @@
 body {
 	margin: 0;
 	font-size: 14px;
+
 	* {
 		box-sizing: border-box;
 	}
@@ -48,6 +49,7 @@ body {
 	height: 20px;
 	vertical-align: top;
 	border: 1px solid #ccc;
+
 	&.is-bg {
 		background-color: #ccc;
 	}
@@ -73,5 +75,11 @@ body {
 		height: 20px;
 		display: inline-block;
 		vertical-align: top;
+	}
+}
+
+.saveData {
+	& > canvas {
+		display: none;
 	}
 }
